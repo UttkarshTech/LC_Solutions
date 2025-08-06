@@ -1,48 +1,39 @@
 ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-
-    //out of place solution, Space Complexity O(n), Time Complexity O{n}
-
-    if (list1 == 0){ //cases where either list is empty or both are empty
-        if (list2 == 0)
-            return 0;
-        else 
-            return list2;
+    ListNode *run1 = list1, *run2 = list2;
+    if (!list1 && !list2)
+        return list1;
+    if (!list1)
+        return list2;
+    if (!list2)
+        return list1;
+    ListNode *sorted;
+    bool flag = false;
+    if (list1->val <= list2->val){
+        sorted = list1;
+        run1 = run1->next;
+        flag = true;
     }
     else {
-        if (list2 == 0)
-            return list1;
+        sorted = list2;
+        run2 = run2->next;
     }
-
-    ListNode *temp1 = list1;
-    ListNode *temp2 = list2;
-    
-    ListNode *head;
-    if (temp1->val <= temp2->val){  //Init head
-        head = temp1;
-        temp1 = temp1->next;
-    }
-    else{
-        head = temp2;
-        temp2 = temp2->next;
-    }
-    
-    ListNode *temp3 = head;
-
-    while (temp1 && temp2){
-        if (temp1->val <= temp2->val){
-            temp3->next = temp1;
-            temp1 = temp1->next;
+    while (run1 && run2){
+        if (run1->val <= run2->val) {
+            sorted->next = run1;
+            sorted = sorted->next;
+            run1 = run1->next;
         } else {
-            temp3->next = temp2;
-            temp2 = temp2->next;
+            sorted->next = run2;
+            sorted = sorted->next;
+            run2 = run2->next;
         }
-        temp3 = temp3->next;
     }
-    
-    if (temp1)
-        temp3->next = temp1;
-    if (temp2)
-        temp3->next = temp2;
-
-    return head;
+    if (!run1)
+        sorted->next = run2;
+    if (!run2)
+        sorted->next = run1;
+    if (flag)
+        return list1;
+    else
+        return list2;
 }

@@ -1,17 +1,12 @@
 int maximum69Number (int num) {
-    int temp = num, div=10, x=9;
-    while (temp%div != temp){
-        x = x*10 + 9;
-        div *= 10;
+    int c = 0, mc = 0, temp = num;
+    while (temp){
+        c++;
+        if (temp%10 == 6 && c > mc)
+            mc = c;
+        temp /= 10;
     }
-    int diff = x - num, digits = 0;
-    if (!diff)
+    if (!mc)
         return num;
-    cout<<diff;
-    div = 10;
-    while (diff%div != diff){
-        digits++;
-        div *= 10;
-    }
-    return num + 3*pow(10,digits);
+    return num + 3 * pow(10, mc-1);
 }

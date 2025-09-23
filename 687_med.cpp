@@ -1,10 +1,10 @@
 int maxLen = 0;
-int lUP(TreeNode *root, TreeNode* parent){
+int lUP(TreeNode *root){
     int ll, rl;
     if (!root)
         return 0;
-    ll = lUP(root->left, root);
-    rl = lUP(root->right, root);
+    ll = lUP(root->left);
+    rl = lUP(root->right);
     if (ll==0 && rl==0)
         return 1;
     if (ll==0){
@@ -37,6 +37,6 @@ int lUP(TreeNode *root, TreeNode* parent){
     }
 }
 int longestUnivaluePath(TreeNode* root) {
-    lUP(root, root);
+    lUP(root);
     return maxLen;
 }
